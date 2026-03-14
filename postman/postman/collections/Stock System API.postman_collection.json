@@ -1,0 +1,245 @@
+{
+  "info": {
+    "_postman_id": "f131e000-0dcd-49f0-b28c-86b690daaf58",
+    "name": "Stock System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "17079127",
+    "_collection_link": "https://go.postman.co/collection/17079127-f131e000-0dcd-49f0-b28c-86b690daaf58?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Product",
+      "item": [
+        {
+          "name": "GetProduct",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{LocalHost}}api/products",
+              "host": [
+                "{{LocalHost}}api"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PostProduct",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"name\": \"Primeiro Protudo\",\r\n  \"quantity\": 10,\r\n  \"price\": 1.50,\r\n  \"createdAt\": \"2026-03-14T13:51:48.185Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LocalHost}}products",
+              "host": [
+                "{{LocalHost}}products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProductId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{LocalHost}}products/:id",
+              "host": [
+                "{{LocalHost}}products"
+              ],
+              "path": [
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProductMovements",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"name\": \"Primeiro Protudo\",\r\n  \"quantity\": 10,\r\n  \"price\": 1.50,\r\n  \"createdAt\": \"2026-03-14T13:51:48.185Z\"\r\n}"
+            },
+            "url": {
+              "raw": "{{LocalHost}}products/:id/movements",
+              "host": [
+                "{{LocalHost}}products"
+              ],
+              "path": [
+                ":id",
+                "movements"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProductLowStock",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{LocalHost}}products/low-stock",
+              "host": [
+                "{{LocalHost}}products"
+              ],
+              "path": [
+                "low-stock"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetProductReport",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{LocalHost}}products/report",
+              "host": [
+                "{{LocalHost}}products"
+              ],
+              "path": [
+                "report"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "StockMovement",
+      "item": [
+        {
+          "name": "GetStockMovements",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{LocalHost}}stock-movements",
+              "host": [
+                "{{LocalHost}}stock-movements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PostStockMovements",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"quantity\": 10,\r\n  \"movementType\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LocalHost}}stock-movements",
+              "host": [
+                "{{LocalHost}}stock-movements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetStockMovementsIdProduct",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{LocalHost}}stock-movements/product/:IdProduct",
+              "host": [
+                "{{LocalHost}}stock-movements"
+              ],
+              "path": [
+                "product",
+                ":IdProduct"
+              ],
+              "variable": [
+                {
+                  "key": "IdProduct",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
