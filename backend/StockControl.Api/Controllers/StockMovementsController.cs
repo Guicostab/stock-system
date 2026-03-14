@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StockControl.Api.Data;
 using StockControl.Api.DTOs;
-using StockControl.Api.Entities;
+using StockControl.Api.Services;
 
 namespace StockControl.Api.Controllers;
 
@@ -10,74 +8,38 @@ namespace StockControl.Api.Controllers;
 [Route("api/stock-movements")]
 public class StockMovementsController : ControllerBase
 {
-    private readonly AppDbContext _context;
+    private readonly IStockMovementService _service;
 
-    public StockMovementsController(AppDbContext context)
+    public StockMovementsController(IStockMovementService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    // GET: api/stock-movements
+    // GET all movements
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var movements = await _context.StockMovements
-            .Include(x => x.Product)
-            .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
-
+        var movements = await _service.GetAll();
         return Ok(movements);
     }
 
-    // GET: api/stock-movements/product/{productId}
+    // GET movements by product
     [HttpGet("product/{productId}")]
     public async Task<IActionResult> GetByProduct(Guid productId)
     {
-        var movements = await _context.StockMovements
-            .Where(x => x.ProductId == productId)
-            .Include(x => x.Product)
-            .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
-
+        var movements = await _service.GetByProduct(productId);
         return Ok(movements);
     }
 
-    // POST: api/stock-movements
+    // CREATE movement
     [HttpPost]
     public async Task<IActionResult> Create(CreateStockMovementDto dto)
     {
-        var product = await _context.Products.FindAsync(dto.ProductId);
+        var result = await _service.Create(dto);
 
-        if (product == null)
-            return NotFound("Produto não encontrado");
+        if (!result.Success)
+            return BadRequest(result.Message);
 
-        switch (dto.MovementType)
-        {
-            // Entrada
-            case MovementType.In:
-                product.Quantity += dto.Quantity;
-                break;
-            // Saída
-            case MovementType.Out when product.Quantity < dto.Quantity:
-                return BadRequest("Estoque insuficiente");
-            case MovementType.Out:
-                product.Quantity -= dto.Quantity;
-                break;
-        }
-
-        var movement = new StockMovement
-        {
-            Id = Guid.NewGuid(),
-            ProductId = dto.ProductId,
-            Quantity = dto.Quantity,
-            MovementType = dto.MovementType,
-            CreatedAt = DateTime.UtcNow
-        };
-
-        _context.StockMovements.Add(movement);
-
-        await _context.SaveChangesAsync();
-
-        return Ok(movement);
+        return Ok(result.Data);
     }
 }
